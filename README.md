@@ -40,3 +40,69 @@ Windows Authentication Process Diagram
 <h1 align="center">
   <img src="/img/1.webp" alt="" height="500px;">
 </h1>
+
+### LSASS
+Local Security Authority Subsystem Service (LSASS) is a collection of many modules and has access to all authentication processes that can be found in %SystemRoot%\System32\Lsass.exe.
+
+
+### SAM Database
+User passwords are stored in a hash format in a registry structure as either an LM hash or an NTLM hash. This file is located in %SystemRoot%/system32/config/SAM and is mounted on HKLM/SAM
+
+Domain Controller (DC) must validate the credentials from the Active Directory database (ntds.dit), which is stored in %SystemRoot%\ntds.dit.
+
+
+### SYSKEY
+Microsoft introduced a security feature in Windows NT 4.0 to help improve the security of the SAM database against offline software cracking. This is the SYSKEY (syskey.exe) feature, which, when enabled, partially encrypts the hard disk copy of the SAM file so that the password hash values for all local accounts stored in the SAM are encrypted with a key.
+
+
+
+### Credential Manager
+
+<h1 align="center">
+  <img src="/img/1.webp" alt="" height="500px;">
+</h1>
+
+
+### NTDS
+NTDS.dit is a database file that stores the data in Active Directory, including but not limited to:
+
+* User accounts (username & password hash)
+* Group accounts
+* Computer accounts
+* Group policy objects
+
+
+## John The Ripper
+
+## Attack Methods
+* Dictionary Attacks
+* Brute Force Attacks
+* Rainbow Table Attacks
+
+
+## Cracking Modes
+Single Crack Mode is one of the most common John modes used when attempting to crack passwords using a single password list
+* Single Crack Mode
+```
+john --format=<hash_type> <hash or hash_file>
+```
+
+* Wordlist Mode
+```
+john --wordlist=<wordlist_file> --rules <hash_file>
+```
+
+* Incremental Mode
+```
+john --incremental <hash_file>
+```
+
+
+# Remote Password Attacks
+## Network Services
+```
+FTP	SMB	NFS
+IMAP/POP3	SSH	MySQL/MSSQL
+RDP	WinRM	VNC
+Telnet	SMTP	LDAP
+```
