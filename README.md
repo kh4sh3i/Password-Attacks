@@ -59,7 +59,7 @@ Microsoft introduced a security feature in Windows NT 4.0 to help improve the se
 ### Credential Manager
 
 <h1 align="center">
-  <img src="/img/1.webp" alt="" height="500px;">
+  <img src="/img/2.webp" alt="" height="500px;">
 </h1>
 
 
@@ -189,6 +189,23 @@ ls /usr/share/hashcat/rules/
 We can now use another tool called CeWL to scan potential words from the company's website and save them in a separate list
 ```
 cewl https://www.inlanefreight.com -d 4 -m 6 --lowercase -w inlane.wordlist
+```
+
+# Password Reuse / Default Passwords
+In addition, easy-to-remember passwords that can be typed quickly instead of typing 15-character long passwords are often used repeatedly because Single-Sign-On (SSO) 
+
+## Credential Stuffing
+```
+https://github.com/ihebski/DefaultCreds-cheat-sheet
+https://www.softwaretestinghelp.com/default-router-username-and-password-list/
+```
+
+## Credential Stuffing - Hydra Syntax
+(username:password) format:
+```
+hydra -C <user_pass.list> <protocol>://<IP>
+```
 
 
-
+# Windows Local Password Attacks
+## Attacking SAM
