@@ -39,5 +39,5 @@ Windows Authentication Process Diagram
 
 <h1 align="center">
   <br>
-  <a href=""><img src="/img/1.webp" alt="" height="300px;"></a>
+  <a href=""><img src="/img/1.webp" alt="" height="500px;"></a>
 </h1>
