@@ -36,3 +36,8 @@ htb-student:x:1000:1000:,,,:/home/htb-student:/bin/bash
 ## 2.Windows Authentication Process
 Windows Authentication Process Diagram
 
+
+<h1 align="center">
+  <br>
+  <a href=""><img src="/img/1.webp" alt="" height="300px;"></a>
+</h1>
